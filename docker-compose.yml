@@ -6,6 +6,8 @@ services:
       context: ./docker
       dockerfile: mongo.dockerfile
     restart: always
+    stdin_open: true
+    tty: true
     ports:
       - "27017:27017"
     volumes:
@@ -18,6 +20,9 @@ services:
       - type: bind
         source: ./config/mongod.conf
         target: /etc/mongod.conf
+      - type: bind
+        source: ./temp
+        target: /data/temp
     environment:
       - MONGO_DB_USER=root
       - MONGO_DB_PASSWORD=root

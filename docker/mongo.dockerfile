@@ -13,6 +13,8 @@ VOLUME ["/data/db"]
 
 WORKDIR /data
 
+RUN mkdir temp
+
 CMD ["service", "mongod", "start"]
 
 # Expose ports.
