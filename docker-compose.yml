@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  mongo:
+    container_name: mongodb
+    build:
+      context: ./docker
+      dockerfile: mongo.dockerfile
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data/db
+      - type: bind
+        source: ./log
+        target: /var/log/mongodb
+      - type: bind
+        source: ./config/mongod.conf
+        target: /etc/mongod.conf
+    environment:
+      - MONGO_DB_USER=root
+      - MONGO_DB_PASSWORD=root
+    networks:
+      - mongodb
+    command: "mongod --bind_ip_all"
+volumes:
+  volume:
+networks:
+  mongodb:
+    name: mongodb
+    driver: bridge
